@@ -64,8 +64,8 @@ for team in data["teamBoxscore"]:
     int(stats["steals"]),
     int(stats["blockedShots"])
   ))
-connection.commit()
-connection.close()
+conection.commit()
+conection.close()
 
 print("Game Imported Into Database!")
 
