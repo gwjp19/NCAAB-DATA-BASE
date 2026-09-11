@@ -17,4 +17,57 @@ for team in data["teamBoxscore"]:
   print(stats)
   print()
 
+import sqlite3
 
+conection = sqlite3.connect("basketball.db")
+cursor = connection.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS team_game_stats (
+  game_id INTEGER,
+  team_id INTEGER,
+  feild_goals_made INTEGER, 
+  feild_gaols_attempted INTEGER,
+  three_points_made INTEGER,
+  three_points_attempted INTEGER,
+  free_throws_made INTEGER,
+  free_throws_attempted INTERGER,
+  offensive_rebounds INTEGER, 
+  total_renounds INTEGER,
+  assists INTEGER,
+  turnovers INTEGER,
+  personal_fouls INTEGER,
+  steals INTEGER,
+  blocked_shots INTEGER,
+  PRIMARY KEY (game_id, team_id)
+)
+""")
+for team in data["teamBoxscore"]:
+  stats = team["teamStats"]
+
+  cursor.execute("""
+  INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)
+  """, (
+    int(game_id),
+    int(team["teamId"]),
+    int(stats["feildGoalsMade"]),
+    int(stats["feildGoalsAttempted"]),
+    int(stats["threePointsMade"]),
+    int(stats["threePointsAttempted"]),
+    int(stats["freeThrowsMade"]),
+    int(stats["freeThrowsAttempted"]),
+    int(stats["offensiveRebounds"]),
+    int(stats["totalRebounds"]),
+    int(stats["assists"]),
+    int(stats["turnovers"]),
+    int(stats["personalFouls"]),
+    int(stats["steals"]),
+    int(stats["blockedShots"])
+  ))
+connection.commit()
+connection.close()
+
+print("Game Imported Into Database!")
+
+
+  
