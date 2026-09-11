@@ -46,7 +46,7 @@ for team in data["teamBoxscore"]:
   stats = team["teamStats"]
 
   cursor.execute("""
-  INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)
+  INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   """, (
     int(game_id),
     int(team["teamId"]),
