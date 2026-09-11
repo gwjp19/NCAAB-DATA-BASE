@@ -50,8 +50,8 @@ for team in data["teamBoxscore"]:
   """, (
     int(game_id),
     int(team["teamId"]),
-    int(stats["feildGoalsMade"]),
-    int(stats["feildGoalsAttempted"]),
+    int(stats["fieldGoalsMade"]),
+    int(stats["fieldGoalsAttempted"]),
     int(stats["threePointsMade"]),
     int(stats["threePointsAttempted"]),
     int(stats["freeThrowsMade"]),
