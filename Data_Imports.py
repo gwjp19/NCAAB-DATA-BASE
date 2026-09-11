@@ -20,7 +20,7 @@ for team in data["teamBoxscore"]:
 import sqlite3
 
 conection = sqlite3.connect("basketball.db")
-cursor = connection.cursor()
+cursor = conection.cursor()
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS team_game_stats (
