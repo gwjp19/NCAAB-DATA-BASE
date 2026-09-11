@@ -11,11 +11,10 @@ data = response.json()
 
 #print(data)
 
-#for team in data["teams"]:
-  #stats = team["teamBoxscore"]["teamStats"]
-  #print(team["nameFull"])
-  #print(stats)
-  #print()
+for team in data["teamBoxscore"]:
+  stats = team["teamStats"]
+  print("Team ID:", team["teamID"])
+  print(stats)
+  print()
 
-for team in data["teams"]:
-  print(team.keys())
+
