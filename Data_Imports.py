@@ -12,3 +12,13 @@ response.raise_for_status()
 data = response.json()
 
 print(data)
+
+url = "https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2026/03"
+
+response2 = requests.get(url)
+
+response2.raise_for_status()
+
+data2 = response2.json()
+
+print(data2)
