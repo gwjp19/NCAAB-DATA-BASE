@@ -10,3 +10,8 @@ response.raise_for_status()
 data = response.json()
 
 print(data)
+
+for team in data["teams"]:
+  print(team["teamName"])
+  print(team["teamStats"])
+  print()
