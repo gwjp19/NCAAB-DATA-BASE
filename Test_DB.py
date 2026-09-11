@@ -1,5 +1,5 @@
 import sqlite3
-conection = sqlite3.conect("basketball.db")
+conection = sqlite3.connect("basketball.db")
 cursor = conection.cursor()
 
 cursor.execute("SELECT * FROM team_game_stats")
