@@ -13,7 +13,7 @@ data = response.json()
 
 for team in data["teamBoxscore"]:
   stats = team["teamStats"]
-  print("Team ID:", team["teamID"])
+  print("Team ID:", team["teamId"])
   print(stats)
   print()
 
