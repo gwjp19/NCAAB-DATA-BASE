@@ -1,6 +1,7 @@
 import requests
+game_id = "6534658"
 
-url = "https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1"
+url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
 
 response = requests.get(url)
 
