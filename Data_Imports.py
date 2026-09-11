@@ -9,10 +9,13 @@ response.raise_for_status()
 
 data = response.json()
 
-print(data)
+#print(data)
+
+#for team in data["teams"]:
+  #stats = team["teamBoxscore"]["teamStats"]
+  #print(team["nameFull"])
+  #print(stats)
+  #print()
 
 for team in data["teams"]:
-  stats = team["teamBoxscore"]["teamStats"]
-  print(team["nameFull"])
-  print(stats)
-  print()
+  print(team.keys())
