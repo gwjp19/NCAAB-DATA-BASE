@@ -13,7 +13,7 @@ data = response.json()
 
 print(data)
 
-url = "https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2026/03"
+url = "https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2025/02"
 
 response2 = requests.get(url)
 
