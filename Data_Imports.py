@@ -20,12 +20,12 @@ for date_info in data["data"]["schedules"]["games"]:
   #print(scoreboard["games"][0])
   for game in scoreboard["games"]:
     game_id = game["game"]["gameID"]
-    print(game["game"]["home"])
-    print(game["game"]["away"])
+    game_id_url = f"https://ncaa-api.henrygd.me/game-stats/basketball-men/d1/{game_id}"
+    game_id_response = requests.get(game_id_url)
+    game_id_responses.raise_for_status()
+    game_stats = game_id_response.json()
+    print(game_stats)
 
-for team in data["scoreboard"]:
-  team_id = team["teamID"]
-  print("Team ID: " + team_id)
 
 import sqlite3
 
