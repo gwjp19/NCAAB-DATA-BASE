@@ -25,7 +25,7 @@ data = response.json()
   #data = response.json()
 
 
-for game in data["data"]["chedules"]["games"]:
+for game in data["data"]["schedules"]["games"]:
   print(game)
 
 for team in data["teamBoxscore"]:
