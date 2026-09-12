@@ -22,7 +22,7 @@ for date_info in data["data"]["schedules"]["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game-stats/basketball-men/d1/{game_id}"
     game_id_response = requests.get(game_id_url)
-    game_id_responses.raise_for_status()
+    game_id_response.raise_for_status()
     game_stats = game_id_response.json()
     print(game_stats)
 
