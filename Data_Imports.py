@@ -17,7 +17,6 @@ for date_info in data["data"]["schedules"]["games"]:
   response = requests.get(url)
   response.raise_for_status()
   scoreboard = response.json()
-  #print(scoreboard["games"][0])
   for game in scoreboard["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
