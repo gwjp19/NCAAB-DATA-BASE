@@ -1,17 +1,16 @@
 import requests
 game_id = []
 
-for month in range (10,13):
-  url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2025/{month:02d}"
+url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
   
 
 #url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
 
-  response = requests.get(url)
+response = requests.get(url)
 
-  response.raise_for_status()
+response.raise_for_status()
 
-  data = response.json()
+data = response.json()
 
 #for month in range (1,4):
   #url = f"https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2025/{month:02d}"
