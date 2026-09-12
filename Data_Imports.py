@@ -13,7 +13,7 @@ response.raise_for_status()
 data = response.json()
 
 print(type(data))
-print(data.keys() if isinstance(data, dict) else "NOT A DICTIONARY")
+print(data.keys())
 
 #for month in range (1,4):
   #url = f"https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2025/{month:02d}"
