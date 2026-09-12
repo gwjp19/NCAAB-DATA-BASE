@@ -23,11 +23,9 @@ for date_info in data["data"]["schedules"]["games"]:
     print(game_id)
 
 
-for team in data["teamBoxscore"]:
-  stats = team["teamStats"]
-  print("Team ID:", team["teamId"])
-  print(stats)
-  print()
+for team in data["scoreboard"]:
+  team_id = team["teamID"]
+  print("Team ID: " + team_id)
 
 import sqlite3
 
