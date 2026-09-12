@@ -17,7 +17,7 @@ for date_info in data["data"]["schedules"]["games"]:
   response = requests.get(url)
   response.raise_for_status()
   scoreboard = response.json()
-  print(scoreboard["games"][0]
+  print(scoreboard["games"][0])
   for game in scoreboard["games"]:
     game_id = game["game"]["gameID"]
     print(game_id)
