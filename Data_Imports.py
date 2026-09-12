@@ -1,7 +1,12 @@
 import requests
 game_id = []
+date = "11/04/2025"
 
-url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
+month, day, year = date.split("/")
+
+url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
+
+#url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
   
 
 #url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
@@ -28,6 +33,7 @@ data = response.json()
 for game in data["data"]["schedules"]["games"]:
   print(game)
 
+  
 for team in data["teamBoxscore"]:
   stats = team["teamStats"]
   print("Team ID:", team["teamId"])
