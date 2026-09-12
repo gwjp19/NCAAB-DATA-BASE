@@ -25,7 +25,7 @@ for date_info in data["data"]["schedules"]["games"]:
     game_stats = game_id_response.json()
     for teamId in game_stats["teams"]:
       team_id = teamId["teamId"]
-      print(team_id)
+     
 
 
 import sqlite3
