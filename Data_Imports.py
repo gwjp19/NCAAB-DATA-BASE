@@ -24,6 +24,9 @@ data = response.json()
 
 print(data)
 
+for date in data:
+  print(date["contestDate"])
+
 for team in data["teamBoxscore"]:
   stats = team["teamStats"]
   print("Team ID:", team["teamId"])
