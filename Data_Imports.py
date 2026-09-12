@@ -2,7 +2,7 @@ import requests
 game_id = []
 
 for month in range (10,13):
-  url = f"https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2025/{month:02d}"
+  url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2025/{month:02d}"
   
 
 #url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
