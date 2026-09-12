@@ -12,8 +12,8 @@ response.raise_for_status()
 
 data = response.json()
 
-print(type(data))
-print(data.keys())
+#print(type(data))
+#print(data.keys())
 
 #for month in range (1,4):
   #url = f"https://ncaa-api.henrygd.me/schedule/basketball-men/d1/2025/{month:02d}"
@@ -25,10 +25,8 @@ print(data.keys())
   #data = response.json()
 
 
-print(data)
-
-for date in data["dates"]:
-  print(date["contestDate"])
+for game in data["data"]["chedules"]["games"]:
+  print(game)
 
 for team in data["teamBoxscore"]:
   stats = team["teamStats"]
