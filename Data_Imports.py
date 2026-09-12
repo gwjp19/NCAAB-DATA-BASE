@@ -11,7 +11,7 @@ response.raise_for_status()
 data = response.json()
 
 for date_info in data["data"]["schedules"]["games"]:
-  date = sate_info["contestDate"]
+  date = date_info["contestDate"]
   month, day, year = date.split("/")
   url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
   response = requests.get(url)
