@@ -19,7 +19,7 @@ for date_info in data["data"]["schedules"]["games"]:
   scoreboard = response.json()
   
   for game in scoreboard["games"]:
-    game_id = game["game"]["gameId"]
+    game_id = game["game"]["gameID"]
     print(game_id)
 
 
