@@ -1,25 +1,27 @@
 import requests
-game_id = []
-
-date = "11/04/2025"
-
-month, day, year = date/split("/")
-
-url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
 
 #url = f"https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
   
 #url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
 
-response = requests.get(url)
-
-response.raise_for_status()
-
 #data = response.json()
 
-scoreboard = response.json()
+
+game_id = []
+
+for date_info in data["data"]["schedules"]["games"]:
+  date = sate_info["contestDate"]
+  month, day, year = date.split("/")
+  url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
+  response = requests.get(url)
+  response.raise_for_status()
+  scoreboard = response.json()
 
 print(scoreboard)
+
+for game in scoreboard["games"]:
+  game_id = game["game"]["gameId"]
+  print(game_id)
 
 #print(type(data))
 #print(data.keys())
