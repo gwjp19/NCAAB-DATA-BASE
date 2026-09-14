@@ -45,11 +45,15 @@ for date_info in data["data"]["schedules"]["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
     game_id_response = requests.get(game_id_url)
+    if game_id_response.status_code == 502:
+        print(f"Skipping game {game_id}: API returned 502")
+        continue
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()
     for team in game_stats["teamBoxscore"]:
       team_id = team["teamId"]
       stats = team["teamStats"]
+    
       
       cursor.execute("""
       INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
