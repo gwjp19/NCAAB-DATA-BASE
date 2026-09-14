@@ -49,7 +49,7 @@ for date_info in data["data"]["schedules"]["games"]:
     game_stats = game_id_response.json()
     for team in game_stats["teams"]:
       team_id = team["teamId"]
-      stats = team["teamStats"]
+      print(team)
       cursor.execute("""
       INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       """, (
