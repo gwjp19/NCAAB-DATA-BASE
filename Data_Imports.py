@@ -77,7 +77,7 @@ for date_info in data["data"]["schedules"]["games"]:
 conection.commit()
 conection.close()
 
-     
+print("Finished downloading database")
 
 
 
