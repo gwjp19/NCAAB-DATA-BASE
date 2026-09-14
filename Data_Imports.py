@@ -1,5 +1,29 @@
 import requests
-#url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
+import sqlite3
+
+conection = sqlite3.connect("basketball.db")
+cursor = conection.cursor()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS team_game_stats (
+  game_id INTEGER,
+  team_id INTEGER,
+  feild_goals_made INTEGER, 
+  feild_gaols_attempted INTEGER,
+  three_points_made INTEGER,
+  three_points_attempted INTEGER,
+  free_throws_made INTEGER,
+  free_throws_attempted INTERGER,
+  offensive_rebounds INTEGER, 
+  total_renounds INTEGER,
+  assists INTEGER,
+  turnovers INTEGER,
+  personal_fouls INTEGER,
+  steals INTEGER,
+  blocked_shots INTEGER,
+  PRIMARY KEY (game_id, team_id)
+)
+""")
+
 
 
 url = "https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
@@ -23,62 +47,35 @@ for date_info in data["data"]["schedules"]["games"]:
     game_id_response = requests.get(game_id_url)
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()
-    for teamId in game_stats["teams"]:
-      team_id = teamId["teamId"]
-     
-
-
-import sqlite3
-
-conection = sqlite3.connect("basketball.db")
-cursor = conection.cursor()
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS team_game_stats (
-  game_id INTEGER,
-  team_id INTEGER,
-  feild_goals_made INTEGER, 
-  feild_gaols_attempted INTEGER,
-  three_points_made INTEGER,
-  three_points_attempted INTEGER,
-  free_throws_made INTEGER,
-  free_throws_attempted INTERGER,
-  offensive_rebounds INTEGER, 
-  total_renounds INTEGER,
-  assists INTEGER,
-  turnovers INTEGER,
-  personal_fouls INTEGER,
-  steals INTEGER,
-  blocked_shots INTEGER,
-  PRIMARY KEY (game_id, team_id)
-)
-""")
-for team in data["teamBoxscore"]:
-  stats = team["teamStats"]
-
-  cursor.execute("""
-  INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  """, (
-    int(game_id),
-    int(team["teamId"]),
-    int(stats["fieldGoalsMade"]),
-    int(stats["fieldGoalsAttempted"]),
-    int(stats["threePointsMade"]),
-    int(stats["threePointsAttempted"]),
-    int(stats["freeThrowsMade"]),
-    int(stats["freeThrowsAttempted"]),
-    int(stats["offensiveRebounds"]),
-    int(stats["totalRebounds"]),
-    int(stats["assists"]),
-    int(stats["turnovers"]),
-    int(stats["personalFouls"]),
-    int(stats["steals"]),
-    int(stats["blockedShots"])
-  ))
+    for team in game_stats["teams"]:
+      team_id = team["teamId"]
+      stats = team["teamStata"]
+      cursor.execute("""
+      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      """, (
+        int(game_id),
+        int(team["teamId"]),
+        int(stats["fieldGoalsMade"]),
+        int(stats["fieldGoalsAttempted"]),
+        int(stats["threePointsMade"]),
+        int(stats["threePointsAttempted"]),
+        int(stats["freeThrowsMade"]),
+        int(stats["freeThrowsAttempted"]),
+        int(stats["offensiveRebounds"]),
+        int(stats["totalRebounds"]),
+        int(stats["assists"]),
+        int(stats["turnovers"]),
+        int(stats["personalFouls"]),
+        int(stats["steals"]),
+        int(stats["blockedShots"])
+      ))
 conection.commit()
 conection.close()
 
-print("Game Imported Into Database!")
+     
 
 
-  
+
+
+
+\
