@@ -40,7 +40,7 @@ response.raise_for_status()
 
 data = response.json()
 
-skipped _dates = []
+skipped_dates = []
 skipped_games = []
 
 for date_info in data["data"]["schedules"]["games"]:
@@ -48,7 +48,7 @@ for date_info in data["data"]["schedules"]["games"]:
   month, day, year = date.split("/")
   url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
   response = requests.get(url)
-  if response.status_code() == 502:
+  if response.status_code == 502:
     print("Boss API returned 502, Skipping date")
     skipped_.append(date)
     continue
@@ -83,7 +83,7 @@ for date in skipped_dates:
   if date_response.status_code == 502:
     print(f"API is unresponsive")
     continue
-  date_response.raise_for_status90
+  date_response.raise_for_status()
   scorebaord = date_response.json()
   for game in scoreboard["games"]:
     game_id2 = game["game"]["gameID"]
