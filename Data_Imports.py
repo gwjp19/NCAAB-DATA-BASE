@@ -40,6 +40,8 @@ response.raise_for_status()
 data = response.json()
 skipped_games = []
 
+print(data.keys())
+
 for date_info in data["data"]["schedules"]["games"]:
   date = date_info["contestDate"]
   month, day, year = date.split("/")
@@ -65,7 +67,7 @@ for game_id in skipped_games:
   game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
   game_id_response2 = requests.get(game_id_url2)
   if game_id_response.status_code == 502:
-    print(f"Skipping game {game_id}: API returned 502") 
+    print(f"{game_id}: API returned 502 Again") 
     continue      
   game_id_response2.raise_for_status()
   game_stats2 = game_id_response2.json()
