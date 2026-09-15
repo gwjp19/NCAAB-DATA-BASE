@@ -79,9 +79,9 @@ for game_id in skippied_games:
       
     
       
-      cursor.execute("""
+    cursor.execute("""
       INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      """, (
+    """, (
         int(game_id),
         int(team["teamId"]),
         int(stats["fieldGoalsMade"]),
@@ -102,7 +102,7 @@ for game_id in skippied_games:
         int(opponent["totalReboounds"]),
         int(opponent["turnovers"]),
         int(opponent["personalFouls"])
-      ))
+    ))
 conection.commit()
 conection.close()
 
