@@ -57,7 +57,7 @@ for date_info in data["data"]["schedules"]["games"]:
       continue            
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()      
-    for i, team in enumerate(game_stats["teamBoxscore"]:
+    for i, team in enumerate(game_stats["teamBoxscore"]):
       team_id = team["teamId"]
       stats = team["teamStats"]
       opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
@@ -69,7 +69,7 @@ for game_id in skippied_games:
     continue      
   game_id_response2.raise_for_status()
   game stats2 = game_id_response2.json()
-  for i, team in enumerate(game_stats2["teamBoxscore"]:
+  for i, team in enumerate(game_stats2["teamBoxscore"]):
     team_id = team["teamId"]
     stats = team["teamStats"]
     opponent = game_stats2["teamBoxscore"][1-i]["teamStats"]
