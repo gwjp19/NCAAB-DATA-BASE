@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS team_game_stats (
   total_rebounds_allowed INTEGER,
   turnovers_forced INTEGER,
   fouls_drawn INTEGER,
+  points INTEGER,
   PRIMARY KEY (game_id, team_id)
 )
 """)
@@ -50,13 +51,21 @@ for date_info in data["data"]["schedules"]["games"]:
   for game in scoreboard["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
+    score_url = f"https://ncaa.henrygd.me/game/{game_id}"
+    score_response = requests.get(score_url)
     game_id_response = requests.get(game_id_url)
-    if game_id_response.status_code == 502:
+    if game_id_response.status_code == 502 or score_response.status_code == 502:
       print(f"Skipping game {game_id}: API returned 502")
+      print(f"Skipping game {game_id} API2 returned 502")            
       skipped_games.append(game_id) 
-      continue            
+      continue   
+    score_response.raise_for_status()
+    score_id = score_response.json()
     game_id_response.raise_for_status()
-    game_stats = game_id_response.json()      
+    game_stats = game_id_response.json()
+    for team in score_id["teams"]:
+      team_id = team["teamId"]
+      points = team["score"]
     for i, team in enumerate(game_stats["teamBoxscore"]):
       team_id = team["teamId"]
       stats = team["teamStats"]
