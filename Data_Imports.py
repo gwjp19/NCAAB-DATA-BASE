@@ -51,7 +51,7 @@ for date_info in data["data"]["schedules"]["games"]:
   for game in scoreboard["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
-    score_url = f"https://ncaa.henrygd.me/game/{game_id}"
+    score_url = f"https://ncaa-api.henrygd.me/game/{game_id}"
     score_response = requests.get(score_url)
     game_id_response = requests.get(game_id_url)
     if game_id_response.status_code == 502 or score_response.status_code == 502:
