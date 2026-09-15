@@ -63,7 +63,7 @@ for date_info in data["data"]["schedules"]["games"]:
     score_id = score_response.json()
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()
-    for team in score_id["teams"]:
+    for team in score_id["contests"][0]["teams"]:
       team_id = team["teamId"]
       points = team["score"]
     for i, team in enumerate(game_stats["teamBoxscore"]):
