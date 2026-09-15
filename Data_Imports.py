@@ -68,7 +68,7 @@ for game_id in skippied_games:
     print(f"Skipping game {game_id}: API returned 502") 
     continue      
   game_id_response2.raise_for_status()
-  game stats2 = game_id_response2.json()
+  game_stats2 = game_id_response2.json()
   for i, team in enumerate(game_stats2["teamBoxscore"]):
     team_id = team["teamId"]
     stats = team["teamStats"]
