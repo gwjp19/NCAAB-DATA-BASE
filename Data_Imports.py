@@ -46,6 +46,9 @@ for date_info in data["data"]["schedules"]["games"]:
   month, day, year = date.split("/")
   url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
   response = requests.get(url)
+  if response.status_code() == 502:
+    print("Boss AP! returned 502, Skipping date")
+    continue
   response.raise_for_status()
   scoreboard = response.json()
   for game in scoreboard["games"]:
