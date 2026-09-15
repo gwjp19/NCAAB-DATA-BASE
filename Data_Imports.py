@@ -7,6 +7,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS team_game_stats (
   game_id INTEGER,
   team_id INTEGER,
+  points INTEGER,
   feild_goals_made INTEGER, 
   feild_gaols_attempted INTEGER,
   three_points_made INTEGER,
@@ -25,7 +26,6 @@ CREATE TABLE IF NOT EXISTS team_game_stats (
   total_rebounds_allowed INTEGER,
   turnovers_forced INTEGER,
   fouls_drawn INTEGER,
-  points INTEGER,
   PRIMARY KEY (game_id, team_id)
 )
 """)
@@ -89,10 +89,11 @@ for game_id in skipped_games:
     
       
     cursor.execute("""
-      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         int(game_id),
         int(team["teamId"]),
+        int(points),
         int(stats["fieldGoalsMade"]),
         int(stats["fieldGoalsAttempted"]),
         int(stats["threePointsMade"]),
