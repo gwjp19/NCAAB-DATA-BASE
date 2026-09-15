@@ -97,7 +97,7 @@ for game_id in skipped_games:
         int(stats["personalFouls"]),
         int(stats["steals"]),
         int(stats["blockedShots"]),
-        int(opponent["feildGoalsAttempted"]),
+        int(opponent["fieldGoalsAttempted"]),
         int(opponent["offensiveRebounds"]),
         int(opponent["totalReboounds"]),
         int(opponent["turnovers"]),
