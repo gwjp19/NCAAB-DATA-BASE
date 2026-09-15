@@ -20,6 +20,11 @@ CREATE TABLE IF NOT EXISTS team_game_stats (
   personal_fouls INTEGER,
   steals INTEGER,
   blocked_shots INTEGER,
+  feild_goal_attempts_allowed INTEGER,
+  offensive_rebounds_allowed INTEGER,
+  total_rebounds_allowed INTEGER,
+  turnovers_forced INTEGER,
+  fouls_drawn INTEGER,
   PRIMARY KEY (game_id, team_id)
 )
 """)
@@ -46,24 +51,36 @@ for date_info in data["data"]["schedules"]["games"]:
     game_id = game["game"]["gameID"]
     game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
     game_id_response = requests.get(game_id_url)
-  for game_id in skipped_games:
-    print(f"retrying {game_id}")
-    game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
-    response2 = requests.get(url)
     if game_id_response.status_code == 502:
-        print(f"Skipping game {game_id}: API returned 502")
-        skipped_game.append(game_id) 
-        continue
+      print(f"Skipping game {game_id}: API returned 502")
+      skipped_games.append(game_id) 
+      continue            
     game_id_response.raise_for_status()
-    game_stats = game_id_response.json()
-    for team in game_stats["teamBoxscore"]:
+    game_stats = game_id_response.json()      
+    for i, team enumerate(game_stats["teamBoxscore"]:
       team_id = team["teamId"]
       stats = team["teamStats"]
+      opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
+for game_id in skippied_games:
+  game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
+  game_id_response2 = requests.get(game_id_url2)
+  if game_id_response.status_code == 502:
+    print(f"Skipping game {game_id}: API returned 502") 
+    continue      
+  game_id_response2.raise_for_status()
+  game stats2 = game_id_response2.json()
+  for i, team enumerate(game_stats2["teamBoxscore"]:
+    team_id = team["teamId"]
+    stats = team["teamStats"]
+    opponent = game_stats2["teamBoxscore"][1-i]["teamStats"]
+      
+
+      
       
     
       
       cursor.execute("""
-      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       """, (
         int(game_id),
         int(team["teamId"]),
@@ -79,7 +96,12 @@ for date_info in data["data"]["schedules"]["games"]:
         int(stats["turnovers"]),
         int(stats["personalFouls"]),
         int(stats["steals"]),
-        int(stats["blockedShots"])
+        int(stats["blockedShots"]),
+        int(opponent["feildGoalsAttempted"]),
+        int(opponent["offensiveRebounds"]),
+        int(opponent["totalReboounds"]),
+        int(opponent["turnovers"]),
+        int(opponent["personalFouls"])
       ))
 conection.commit()
 conection.close()
