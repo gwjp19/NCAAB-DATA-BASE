@@ -39,6 +39,8 @@ response.raise_for_status()
   
 
 data = response.json()
+
+skipped _dates = []
 skipped_games = []
 
 for date_info in data["data"]["schedules"]["games"]:
@@ -47,7 +49,8 @@ for date_info in data["data"]["schedules"]["games"]:
   url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
   response = requests.get(url)
   if response.status_code() == 502:
-    print("Boss AP! returned 502, Skipping date")
+    print("Boss API returned 502, Skipping date")
+    skipped_.append(date)
     continue
   response.raise_for_status()
   scoreboard = response.json()
@@ -73,6 +76,37 @@ for date_info in data["data"]["schedules"]["games"]:
       team_id = team["teamId"]
       stats = team["teamStats"]
       opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
+for date in skipped_dates:
+  month, day, year = date.split("/")
+  date_url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
+  date_response = requests.get(date_url)
+  if date_response.status_code == 502:
+    print(f"API is unresponsive")
+    continue
+  date_response.raise_for_status90
+  scorebaord = date_response.json()
+  for game in scoreboard["games"]:
+    game_id2 = game["game"]["gameID"]
+    game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
+    score_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}"
+    score_response2 = requests.get(score_url2)
+    game_id_response2 = requests.get(game_id_url2)
+    if game_id_response2.status_code == 502 or score_response.status_code == 502:
+      print(f"Skipping game {game_id}: API returned 502")
+      print(f"Skipping game {game_id} API2 returned 502")            
+      skipped_games2.append(game_id2) 
+      continue   
+    score_response2.raise_for_status()
+    score_id2 = score_response2.json()
+    game_id_response2.raise_for_status()
+    game_stats2 = game_id_response2.json()
+    for team in score_id["contests"][0]["teams"]:
+      team_id = team["teamId"]
+      points = team["score"]
+    for i, team in enumerate(game_stats["teamBoxscore"]):
+      team_id = team["teamId"]
+      stats = team["teamStats"]
+      opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
 for game_id in skipped_games:
   game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
   game_id_response2 = requests.get(game_id_url2)
@@ -81,6 +115,8 @@ for game_id in skipped_games:
     continue      
   game_id_response2.raise_for_status()
   game_stats2 = game_id_response2.json()
+  response.raise_for_status()
+  scoreboard = response.json()
   for i, team in enumerate(game_stats2["teamBoxscore"]):
     team_id = team["teamId"]
     stats = team["teamStats"]
