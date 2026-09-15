@@ -61,7 +61,7 @@ for date_info in data["data"]["schedules"]["games"]:
       team_id = team["teamId"]
       stats = team["teamStats"]
       opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
-for game_id in skippied_games:
+for game_id in skipped_games:
   game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
   game_id_response2 = requests.get(game_id_url2)
   if game_id_response.status_code == 502:
