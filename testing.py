@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS team_game_stats (
   total_rebounds_allowed INTEGER,
   turnovers_forced INTEGER,
   fouls_drawn INTEGER,
-  points_scored FLOAT,
-  points_allowed FLOAT
+  ppp FLOAT,
+  papp FLOAT
   PRIMARY KEY (game_id, team_id)
 )
 """)
@@ -73,7 +73,6 @@ for date_info in data["data"]["schedules"]["games"]:
     game_stats = game_id_response.json()
     for team in score_id["contests"][0]["teams"]:
       team_id = team["teamId"]
-      points = team["score"]
     for i, team in enumerate(game_stats["teamBoxscore"]):
       team_id = team["teamId"]
       stats = team["teamStats"]
@@ -153,19 +152,14 @@ for game_id in skipped_games:
         int(opponent["totalReboounds"]),
         int(opponent["turnovers"]),
         int(opponent["personalFouls"]),
-        float(stats["points"]),
-        float(opponent["points"])
+        float(stats(((3 * ["threePointsMade"]) + (2 * (["feildGoalsMade"] - ["threePointsMade"])) + ["freeThrowsMade"]) / (["fiedGoalsAttempted"] - ["offensiveRebounds"] + (0.475 * ["freeThrowsAttempted"]) + ["turnovers"]))),
+        float(opponent(((3 * ["threePointsMade"]) + (2 * (["feildGoalsMade"] - ["threePointsMade"])) + ["freeThrowsMade"]) / (["fiedGoalsAttempted"] - ["offensiveRebounds"] + (0.475 * ["freeThrowsAttempted"]) + ["turnovers"]))),
     ))
 conection.commit()
 conection.close()
 
 print("Finished downloading database")
 
-#1: for every game ppp / papp = adj ppp consider and papp/ppp for adjusted papp
-#2: game adj ppp / opponets average adj papp = sos adjusted ppp
-#3: sos adjusted ppp * sos adjusted pappp
-
-#4:
 
 
 
