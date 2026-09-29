@@ -1,7 +1,9 @@
-url = "https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
+score_url = f"https://ncaa-api.henrygd.me/game/6585386"
 
 response = requests.get(url)
 response.raise_for_status()
   
 
 data = response.json()
+
+print(data)
