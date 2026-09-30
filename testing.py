@@ -83,6 +83,7 @@ for i in range(1,2):
       team_id = team["teamId"]
       stats = team["teamStats"]
       opponent = game_stats["teamBoxscore"][1-i]["teamStats"]
+      ppp = (((3 * ["threePointsMade"]) + (2 * (["feildGoalsMade"] - ["threePointsMade"])) + ["freeThrowsMade"]) / (["fiedGoalsAttempted"] - ["offensiveRebounds"] + (0.475 * ["freeThrowsAttempted"]) + ["turnovers"]))
 for date in skipped_dates:
   month, day, year = date.split("/")
   date_url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
@@ -109,7 +110,6 @@ for date in skipped_dates:
     game_stats2 = game_id_response2.json()
     for team in score_id["contests"][0]["teams"]:
       team_id = team["teamId"]
-      points = team["score"]
     for i, team in enumerate(game_stats["teamBoxscore"]):
       team_id = team["teamId"]
       stats = team["teamStats"]
@@ -158,8 +158,8 @@ for game_id in skipped_games:
         int(opponent["totalReboounds"]),
         int(opponent["turnovers"]),
         int(opponent["personalFouls"]),
-        float(stats(((3 * ["threePointsMade"]) + (2 * (["feildGoalsMade"] - ["threePointsMade"])) + ["freeThrowsMade"]) / (["fiedGoalsAttempted"] - ["offensiveRebounds"] + (0.475 * ["freeThrowsAttempted"]) + ["turnovers"]))),
-        float(opponent(((3 * ["threePointsMade"]) + (2 * (["feildGoalsMade"] - ["threePointsMade"])) + ["freeThrowsMade"]) / (["fiedGoalsAttempted"] - ["offensiveRebounds"] + (0.475 * ["freeThrowsAttempted"]) + ["turnovers"]))),
+        float(stats(ppp)),
+        float(opponent(ppp),
     ))
 conection.commit()
 conection.close()
