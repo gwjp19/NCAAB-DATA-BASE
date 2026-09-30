@@ -88,8 +88,8 @@ for date in skipped_dates:
   scorebaord = date_response.json()
   for game in scoreboard["games"]:
     game_id2 = game["game"]["gameID"]
-    game_id_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
-    score_url2 = f"https://ncaa-api.henrygd.me/game/{game_id}"
+    game_id_url2 = f"https://ncaa-api.henrygd.me/game/6595386/team-stats"
+    score_url2 = f"https://ncaa-api.henrygd.me/game/6595386"
     score_response2 = requests.get(score_url2)
     game_id_response2 = requests.get(game_id_url2)
     if game_id_response2.status_code == 502 or score_response.status_code == 502:
