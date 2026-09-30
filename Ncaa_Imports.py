@@ -7,15 +7,14 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS team_game_stats (
   game_id INTEGER,
   team_id INTEGER,
-  points INTEGER,
   field_goals_made INTEGER, 
-  field_gaols_attempted INTEGER,
+  field_goals_attempted INTEGER,
   three_points_made INTEGER,
   three_points_attempted INTEGER,
   free_throws_made INTEGER,
   free_throws_attempted INTEGER,
   offensive_rebounds INTEGER, 
-  total_renounds INTEGER,
+  total_rebounds INTEGER,
   assists INTEGER,
   turnovers INTEGER,
   personal_fouls INTEGER,
@@ -42,9 +41,6 @@ response.raise_for_status()
 
 data = response.json()
 
-skipped_dates = []
-skipped_games = []
-
 for date_info in data["data"]["schedules"]["games"]:
   date = date_info["contestDate"]
   month, day, year = date.split("/")
@@ -63,9 +59,6 @@ for date_info in data["data"]["schedules"]["games"]:
     score_response = requests.get(score_url)
     game_id_response = requests.get(game_id_url)
     if game_id_response.status_code == 502 or score_response.status_code == 502:
-      print(f"Skipping game {game_id}: API returned 502")
-      print(f"Skipping game {game_id} API2 returned 502")            
-      skipped_games.append(game_id) 
       continue   
     score_response.raise_for_status()
     score_id = score_response.json()
@@ -81,11 +74,10 @@ for date_info in data["data"]["schedules"]["games"]:
     
       
     cursor.execute("""
-      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT OR REPLACE INTO team_game_stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         int(game_id),
         int(team["teamId"]),
-        int(points),
         int(stats["fieldGoalsMade"]),
         int(stats["fieldGoalsAttempted"]),
         int(stats["threePointsMade"]),
@@ -104,8 +96,8 @@ for date_info in data["data"]["schedules"]["games"]:
         int(opponent["totalRebounds"]),
         int(opponent["turnovers"]),
         int(opponent["personalFouls"]),
-        float((((3 * stats["threePointsMade"]) + (2 * ((stats["feildGoalsMade"]) - (stats["threePointsMade"]))) + stats["freeThrowsMade"]) / (stats["fiedGoalsAttempted"] - stats["offensiveRebounds"] + (0.475 * stats["freeThrowsAttempted"]) + stats["turnovers"]))),
-        float((((3 * opponent["threePointsMade"]) + (2 * ((opponent["feildGoalsMade"]) - (opponent["threePointsMade"]))) + opponent["freeThrowsMade"]) / (opponent["fiedGoalsAttempted"] - opponet["offensiveRebounds"] + (0.475 * opponent["freeThrowsAttempted"]) + opponent["turnovers"]))),
+        float((((3 * stats["threePointsMade"]) + (2 * ((stats["fieldGoalsMade"]) - (stats["threePointsMade"]))) + stats["freeThrowsMade"]) / (stats["fieldGoalsAttempted"] - stats["offensiveRebounds"] + (0.475 * stats["freeThrowsAttempted"]) + stats["turnovers"]))),
+        float((((3 * opponent["threePointsMade"]) + (2 * ((opponent["fieldGoalsMade"]) - (opponent["threePointsMade"]))) + opponent["freeThrowsMade"]) / (opponent["fieldGoalsAttempted"] - opponet["offensiveRebounds"] + (0.475 * opponent["freeThrowsAttempted"]) + opponent["turnovers"]))),
       
     ))
 conection.commit()
