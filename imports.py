@@ -76,7 +76,7 @@ def process_game(game_id):
         INSERT OR REPLACE INTO TEAMS (team_id, team_name)
         VALUES (?, ?)
       """, (
-        int(team["teamId"])
+        int(team["teamId"]),
         team["nameFull"]
       ))
 
