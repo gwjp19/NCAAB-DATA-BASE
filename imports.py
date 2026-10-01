@@ -71,14 +71,14 @@ def process_game(game_id):
     game_response.raise_for_status()
     game_data = game_response.json()
 
-  for team in game_data["contests"][0]["teams"]:
-    cursor.execute("""
-      INSERT OR REPLACE INTO TEAMS (team_id, team_name)
-      VALUES (?, ?)
-    """, (
-      int(team["teamId"])
-      team["nameFull"]
-    ))
+    for team in game_data["contests"][0]["teams"]:
+      cursor.execute("""
+        INSERT OR REPLACE INTO TEAMS (team_id, team_name)
+        VALUES (?, ?)
+      """, (
+        int(team["teamId"])
+        team["nameFull"]
+      ))
 
     rows = []
     try:
