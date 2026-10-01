@@ -38,9 +38,6 @@ CREATE TABLE IF NOT EXISTS teams (
   team_name TEXT NOT NULL
   )
 """)
-
-for team in game_stats["teams"]:
-  team_id = in
 # convert every needed stat to int once 
 NEEDED = [
     "fieldGoalsMade", "fieldGoalsAttempted",
