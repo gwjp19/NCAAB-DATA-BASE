@@ -32,8 +32,16 @@ CREATE TABLE IF NOT EXISTS team_game_stats (
   PRIMARY KEY (game_id, team_id)
 )
 """)
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS teams (
+  team_id INTEGER PRIMARY KEY,
+  team_name TEXT NOT NULL
+  )
+""")
 
-# ---- Fix 6: convert every needed stat to int once ----
+for team in game_stats["teams"]:
+  team_id = in
+# convert every needed stat to int once 
 NEEDED = [
     "fieldGoalsMade", "fieldGoalsAttempted",
     "threePointsMade", "threePointsAttempted",
@@ -62,6 +70,18 @@ def process_game(game_id):
         return False
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()
+    game_response = requests.get(f"https://ncaa-api.henry.gd.me/game/{game_id}")
+    game_response.raise_for_status()
+    game_data = game_response.json()
+
+  for team in game_data["contests"][0]["teams"]:
+    cursor.execute("""
+      INSERT OR REPLACE INTO TEAMS (team_id, team_name)
+      VALUES (?, ?)
+    """, (
+      int(team["teamId"])
+      team["nameFull"]
+    ))
 
     rows = []
     try:
@@ -116,7 +136,7 @@ data = response.json()
 skipped_dates = []
 skipped_games = []
 
-# ---- Fix 7: unique dates, sorted chronologically ----
+# unique dates, sorted chronologically
 all_games = data["data"]["schedules"]["games"]
 dates = sorted(
     {g["contestDate"] for g in all_games},
