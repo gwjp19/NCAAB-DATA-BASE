@@ -1,3 +1,4 @@
+import requests
 score_url = f"https://localhost:3000/game/6595386"
 
 response = requests.get(url)
