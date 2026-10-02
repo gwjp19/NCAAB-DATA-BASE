@@ -48,6 +48,7 @@ NEEDED = [
     "steals", "blockedShots",
 ]
 
+base_url = "http://localhost:3000"
 def clean(raw):
     return {k: int(raw[k]) for k in NEEDED}
 
@@ -60,14 +61,14 @@ def poss(s):
 
 def process_game(game_id):
     """Returns True if saved, False if the game should be skipped/retried."""
-    game_id_url = f"https://ncaa-api.henrygd.me/game/{game_id}/team-stats"
+    game_id_url = f"{base_url}/game/{game_id}/team-stats"
     game_id_response = requests.get(game_id_url)
     if game_id_response.status_code == 502:
         print(f"Skipping game {game_id}: API returned 502")
         return False
     game_id_response.raise_for_status()
     game_stats = game_id_response.json()
-    game_response = requests.get(f"https://ncaa-api.henry.gd.me/game/{game_id}")
+    game_response = requests.get(f"{base_url}/game/{game_id}")
     game_response.raise_for_status()
     game_data = game_response.json()
 
@@ -125,7 +126,7 @@ def process_game(game_id):
         )
     return True
 
-url = "https://ncaa-api.henrygd.me/schedule-alt/basketball-men/d1/2026"
+url = f"{base_url}/schedule-alt/basketball-men/d1/2026"
 response = requests.get(url)
 response.raise_for_status()
 data = response.json()
@@ -143,7 +144,7 @@ dates = sorted(
 for date in dates:
     month, day, year = date.split("/")
     month, day = month.zfill(2), day.zfill(2)
-    url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
+    url = f"{base_url}/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
     response = requests.get(url)
     if response.status_code == 502:
         print(f"API returned 502, skipping date {date}")
@@ -161,7 +162,7 @@ for date in dates:
 for date in skipped_dates:
     month, day, year = date.split("/")
     month, day = month.zfill(2), day.zfill(2)
-    url = f"https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
+    url = f"{base_url}/scoreboard/basketball-men/d1/{year}/{month}/{day}/all-conf"
     response = requests.get(url)
     if response.status_code == 502:
         print(f"Date {date}: API still unresponsive")
