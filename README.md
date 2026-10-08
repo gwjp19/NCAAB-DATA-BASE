@@ -1,2 +1,39 @@
 # NCAAB-DATA-BASE
-A structured SQLite database used to store and retrieve team box score data collected through NCAA-API from henrygd. Designed tables to connect games, teams, and game statistics to efficiently store, retrieve, and analyze past data for use in other projects.
+
+The primary service for the database is for easy and simple feature pulls and feature creation for use in both efficiency models and score predictions models
+
+The database has two tables:
+
+## Game_Stats Table
+
+the game stats table creates to rows for every game, one for each team, the games are separated by game_id and team_id, the database store features such as:
+
+-Points
+
+-Field Goals Made/Attempted
+
+-Three Pointers Made/Attempted
+
+-Free Throws Made/Attempted
+
+-Offensive and total rebounds
+
+-Assists 
+
+-Turnovers/Turnovers Forced
+
+-Personal Fouls/Fouls Drawn
+
+-Steals
+
+-Blocked Shots
+
+-Field Goal Attempts Allowed
+
+-Offensive and Total Rebounds Allowed
+
+-Points Per Possession and Points Allowed Per Possession
+
+## Team Table:
+
+The team table links team names and team ids for easy use and interchanging of team names and ids 
