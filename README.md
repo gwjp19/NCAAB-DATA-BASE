@@ -1,14 +1,20 @@
 # NCAAB-DATA-BASE
 
-The primary service for the database is for easy and simple feature pulls and feature creation for use in both efficiency models and score predictions models
+## Database Design
 
-The database has two tables:
+The database is an SQLite database built using data provided from the NCAA-API from Henrygd. The API is run locally to ensure reliable connection and optimal performance. The database cleans and structures the data to ensure complete rows and consistent formatting.
 
-## Game_Stats Table
+### Team Table:
 
-the game stats table creates to rows for every game, one for each team, the games are separated by game_id and team_id, the database store features such as:
+The team table links team names and team IDs, making it easy to switch between names and IDs when querying the database.
+
+### Game_Stats Table
+
+Multiple features are calculated and stored for each teams performance in each game, including:
 
 -Points
+
+-Possessions
 
 -Field Goals Made/Attempted
 
@@ -34,6 +40,5 @@ the game stats table creates to rows for every game, one for each team, the game
 
 -Points Per Possession and Points Allowed Per Possession
 
-## Team Table:
+These features are calculated for each teaming every game. The database import the data from the API, processes it, and stores the resulting statuses rows in the database.
 
-The team table links team names and team ids for easy use and interchanging of team names and ids 
